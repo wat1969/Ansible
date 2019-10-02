@@ -1,0 +1,35 @@
+- name: Deploy app from git "remote" host
+  hosts: ec2
+  remote_user: ubuntu
+  vars:
+    git_repo: git@github.com:wat1969/go hello.git
+    service_name: "training-hello"
+
+  tasks:
+  - name: Check out latest code
+    git:
+      repo: "{{ git_repo }}"
+      dest: ~/srv/app
+      version: master
+    tags:
+      - app
+
+  - name: Build docker image
+    shell:
+      cmd: docker build -t app:latest .
+      chdir: ~/srv/app
+    tags:
+      - app
+
+  - name: Run tests against built image
+    shell: docker run --rm app:latest go test
+    tags:
+      - app
+
+  - name: Remove existing service container
+    shell: "docker rm -f {{ service_name }} || true"
+
+  - name: Deploy new built image
+    shell: "docker run -d -p 80:8080 --name {{ service_name }} app:latest"
+    tags:
+      - app
