@@ -13,7 +13,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if target == "" {
 		target = "Ansible"
 	}
-	fmt.Fprintf(w, "Hello %s!", target)
+	fmt.Fprintf(w, "HI %s!", target)
 }
 
 func main() {
