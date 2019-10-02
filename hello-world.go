@@ -11,9 +11,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	log.Print("Hello world received a request.")
 	target := os.Getenv("TARGET")
 	if target == "" {
-		target = "World"
+		target = "World world world"
 	}
-	fmt.Fprintf(w, "Hello Hello Hello %s!", target)
+	fmt.Fprintf(w, "Hello %s!", target)
 }
 
 func main() {
