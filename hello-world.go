@@ -11,7 +11,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	log.Print("Hello world received a request.")
 	target := os.Getenv("TARGET")
 	if target == "" {
-		target = "World world world"
+		target = "Ansible"
 	}
 	fmt.Fprintf(w, "Hello %s!", target)
 }
